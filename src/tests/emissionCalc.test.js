@@ -1,20 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import {
-  calculateTransportEmissions,
-  calculateFoodEmissions,
-  calculateEnergyEmissions,
-  calculateShoppingEmissions,
-  calculateTotalEmissions,
-  monthlyKgToAnnualTonnes,
-  generateMockHistory,
+  calculateTransportEmissions, calculateFoodEmissions,
+  calculateEnergyEmissions, calculateShoppingEmissions,
+  calculateTotalEmissions, monthlyKgToAnnualTonnes, generateMockHistory,
 } from '../utils/emissionCalc';
 
 describe('calculateTransportEmissions', () => {
   it('should return 0 for zero inputs', () => {
     const result = calculateTransportEmissions({
-      carKmPerWeek: 0,
-      flightKmPerMonth: 0,
-      publicTransportKmPerWeek: 0,
+      carKmPerWeek: 0, flightKmPerMonth: 0, publicTransportKmPerWeek: 0,
     });
     expect(result).toBe(0);
   });
@@ -22,22 +16,16 @@ describe('calculateTransportEmissions', () => {
   it('should correctly calculate car emissions', () => {
     // 100 km/week * 4.33 weeks/month * 0.21 kg/km = ~90.93
     const result = calculateTransportEmissions({
-      carKmPerWeek: 100,
-      flightKmPerMonth: 0,
-      publicTransportKmPerWeek: 0,
+      carKmPerWeek: 100, flightKmPerMonth: 0, publicTransportKmPerWeek: 0,
     });
     expect(result).toBeCloseTo(90.93, 1);
   });
 
   it('should combine all transport types', () => {
     const result = calculateTransportEmissions({
-      carKmPerWeek: 50,
-      flightKmPerMonth: 200,
-      publicTransportKmPerWeek: 30,
+      carKmPerWeek: 50, flightKmPerMonth: 200, publicTransportKmPerWeek: 30,
     });
-    // car: 50 * 4.33 * 0.21 = 45.465
-    // flight: 200 * 0.255 = 51
-    // public: 30 * 4.33 * 0.089 = 11.5611
+    // car: 50*4.33*0.21=45.465, flight: 200*0.255=51, public: 30*4.33*0.089=11.5611
     const expected = 45.465 + 51 + 11.5611;
     expect(result).toBeCloseTo(expected, 1);
   });
@@ -46,9 +34,7 @@ describe('calculateTransportEmissions', () => {
 describe('calculateFoodEmissions', () => {
   it('should return 0 for zero inputs', () => {
     const result = calculateFoodEmissions({
-      beefKgPerWeek: 0,
-      chickenKgPerWeek: 0,
-      vegetarianMealsPerWeek: 0,
+      beefKgPerWeek: 0, chickenKgPerWeek: 0, vegetarianMealsPerWeek: 0,
     });
     expect(result).toBe(0);
   });
@@ -56,9 +42,7 @@ describe('calculateFoodEmissions', () => {
   it('should calculate beef emissions correctly', () => {
     // 1 kg/week * 4.33 * 27 = 116.91
     const result = calculateFoodEmissions({
-      beefKgPerWeek: 1,
-      chickenKgPerWeek: 0,
-      vegetarianMealsPerWeek: 0,
+      beefKgPerWeek: 1, chickenKgPerWeek: 0, vegetarianMealsPerWeek: 0,
     });
     expect(result).toBeCloseTo(116.91, 1);
   });
@@ -66,9 +50,7 @@ describe('calculateFoodEmissions', () => {
   it('should include vegetarian meal emissions', () => {
     // 7 meals/week * 0.4 kg/meal * 4.33 * 2.0 = 24.248
     const result = calculateFoodEmissions({
-      beefKgPerWeek: 0,
-      chickenKgPerWeek: 0,
-      vegetarianMealsPerWeek: 7,
+      beefKgPerWeek: 0, chickenKgPerWeek: 0, vegetarianMealsPerWeek: 7,
     });
     expect(result).toBeCloseTo(24.248, 1);
   });
@@ -77,8 +59,7 @@ describe('calculateFoodEmissions', () => {
 describe('calculateEnergyEmissions', () => {
   it('should return 0 for zero inputs', () => {
     const result = calculateEnergyEmissions({
-      electricityKwhPerMonth: 0,
-      naturalGasCubicMPerMonth: 0,
+      electricityKwhPerMonth: 0, naturalGasCubicMPerMonth: 0,
     });
     expect(result).toBe(0);
   });
@@ -86,8 +67,7 @@ describe('calculateEnergyEmissions', () => {
   it('should calculate electricity emissions correctly', () => {
     // 200 kWh * 0.82 = 164
     const result = calculateEnergyEmissions({
-      electricityKwhPerMonth: 200,
-      naturalGasCubicMPerMonth: 0,
+      electricityKwhPerMonth: 200, naturalGasCubicMPerMonth: 0,
     });
     expect(result).toBeCloseTo(164, 1);
   });
@@ -95,10 +75,9 @@ describe('calculateEnergyEmissions', () => {
 
 describe('calculateShoppingEmissions', () => {
   it('should calculate combined shopping emissions', () => {
-    // low: 5 * 10 = 50, high: 3 * 30 = 90 => 140
+    // low: 5*10=50, high: 3*30=90 => 140
     const result = calculateShoppingEmissions({
-      lowImpactSpendPerMonth: 5,
-      highImpactSpendPerMonth: 3,
+      lowImpactSpendPerMonth: 5, highImpactSpendPerMonth: 3,
     });
     expect(result).toBe(140);
   });
