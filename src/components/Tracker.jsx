@@ -23,12 +23,9 @@ function Tracker({ last7Days, streakCount, hasCheckedInToday, logCheckIn }) {
   };
 
   /**
-   * Handles the custom action form submission.
-   *
-   * @param {Event} e - Form submit event
+   * Handles the custom action submission.
    */
-  const handleCustomAction = (e) => {
-    e.preventDefault();
+  const handleCustomAction = () => {
     if (customAction.trim()) {
       logCheckIn(customAction.trim());
       setCustomAction('');
@@ -106,7 +103,7 @@ function Tracker({ last7Days, streakCount, hasCheckedInToday, logCheckIn }) {
               ))}
             </div>
 
-            <form className="tracker-custom-form" onSubmit={handleCustomAction}>
+            <div className="tracker-custom-form">
               <label htmlFor="custom-action-input" className="sr-only">
                 Describe your green action
               </label>
@@ -120,13 +117,14 @@ function Tracker({ last7Days, streakCount, hasCheckedInToday, logCheckIn }) {
                 maxLength={100}
               />
               <button
-                type="submit"
+                type="button"
                 className="btn btn-primary"
                 disabled={!customAction.trim()}
+                onClick={handleCustomAction}
               >
                 Log Action
               </button>
-            </form>
+            </div>
           </>
         ) : (
           <div className="tracker-checked-in">

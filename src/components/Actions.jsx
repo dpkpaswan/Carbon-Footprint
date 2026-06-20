@@ -1,6 +1,14 @@
 import React, { useMemo } from 'react';
 import { ACTION_RECOMMENDATIONS } from '../data/actionRecommendations';
 
+/** @type {Object} Human-readable labels and icons for each emission category. */
+const CATEGORY_LABELS = {
+  transport: { name: 'Transportation', icon: '🚗' },
+  food: { name: 'Food & Diet', icon: '🍽️' },
+  energy: { name: 'Home Energy', icon: '⚡' },
+  shopping: { name: 'Shopping', icon: '🛒' },
+};
+
 /**
  * Action recommendations page with personalized tips.
  *
@@ -29,13 +37,6 @@ function Actions({ emissions, toggleCommitAction, isActionCommitted, co2SavedFro
     return groups;
   }, [sortedCategories]);
 
-  const categoryLabels = {
-    transport: { name: 'Transportation', icon: '🚗' },
-    food: { name: 'Food & Diet', icon: '🍽️' },
-    energy: { name: 'Home Energy', icon: '⚡' },
-    shopping: { name: 'Shopping', icon: '🛒' },
-  };
-
   return (
     <section
       className="actions"
@@ -60,10 +61,10 @@ function Actions({ emissions, toggleCommitAction, isActionCommitted, co2SavedFro
           <div key={cat} className="actions-group">
             <div className="actions-group-header">
               <span className="actions-group-icon" aria-hidden="true">
-                {categoryLabels[cat]?.icon}
+                {CATEGORY_LABELS[cat]?.icon}
               </span>
               <h3 className="actions-group-title">
-                {categoryLabels[cat]?.name}
+                {CATEGORY_LABELS[cat]?.name}
                 {catIdx === 0 && (
                   <span className="actions-badge-top">Highest Impact</span>
                 )}

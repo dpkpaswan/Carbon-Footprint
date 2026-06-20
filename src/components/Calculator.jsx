@@ -44,20 +44,20 @@ function Calculator({ inputs, updateInput, onComplete }) {
   );
 
   /** Advances to next step or completes the calculation. */
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (currentStep < TOTAL_STEPS - 1) {
       setCurrentStep((s) => s + 1);
     } else {
       onComplete();
     }
-  };
+  }, [currentStep, onComplete]);
 
   /** Goes back to the previous step. */
-  const goPrev = () => {
+  const goPrev = useCallback(() => {
     if (currentStep > 0) {
       setCurrentStep((s) => s - 1);
     }
-  };
+  }, [currentStep]);
 
   /** @type {string} Progress bar width as CSS percentage. */
   const progressWidth = `${((currentStep + 1) / TOTAL_STEPS) * 100}%`;
